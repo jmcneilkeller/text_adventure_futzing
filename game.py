@@ -5,6 +5,8 @@ import cmd
 import textwrap
 import sys
 import os
+import time
+from random import uniform
 
 screen_width = 100
 
@@ -12,11 +14,14 @@ screen_width = 100
 
 class Player():
     
-    def __init__(self,name):
+    def __init__(self):
         # Expects string for name. 
         self.name = name
-        self.will = 100
+        self.will = 0
+        self.degree = ''
         self.location = 'start'
+        self.gameover = False
+        # DEGREE?
         
 myPlayer = Player()
         
@@ -73,11 +78,72 @@ def prompt():
     if action.lower() == 'quit':
         sys.exit()
     elif action.lower() in ['move', 'go', 'walk']:
-        player_move[action.lower()]
-    elif 
+        move(action.lower())
+    elif action.lower() in ['inspect', 'examine', 'interact', 'look']:
+        examine(action.lower())
+
+def move(myAction):
+    ask = 'Where would you like to move to?\n'
+    dest = input(ask)
+    if dest in ['up', 'north']:
+        destination = zonemap[myPlayer.location][UP]
+        movement(destination)
+    elif dest in ['down', 'south']:
+        destination = zonemap[myPlayer.location][DOWN]
+        movement(destination)
+    elif dest in ['left', 'west']:
+        destination = zonemap[myPlayer.location][LEFt]
+        movement(destination)
+    elif dest in ['right', 'east']:
+        destination = zonemap[myPlayer.location][RIGHT]
+        movement(destination)
+
+def movement(destination):
+    print("\n" + "You have moved " + destination + ".")
+    myPlayer.location = destination
+    print_location()
+
+def examine(action):
+    if zonemap[myPlayer.location][SOLVED]:
+        print('You have found everything of value')
+    else:
+        print('Do something here')
+
+
 
     
 ### GAME FUNCTIONALITY ###
+
+def start_game():
+    pass
+
+
+def main_game():
+    while myPlayer.gameover is False:
+        prompt()
+        # Here handle boss defeated, puzzles solves, etc...
+
+def typewriter(text, start=None, stop=None):
+    # Prints out in a typewriter effect.
+    # Expects a string
+    if start is None:
+        start = 0.05
+    if stop is None:
+        stop = 0.1
+    for i in range(len(text)):
+        sys.stdout.write(text[i])
+        sys.stdout.flush()
+        time.sleep(uniform(start, stop))
+
+def setup_game():
+    os.system('clear')
+
+    # NAME
+    question1 = "What's your name, sailor?"
+    typewriter(question1)
+    myPlayer.name = input("> ")
+
+
 
 
 ### MAP ###
@@ -132,7 +198,13 @@ worldmap = {'a1': {
                   }
             
 }  
-    
+
+
+
+
+
+
+title_screen()
     
     
     
