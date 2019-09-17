@@ -15,12 +15,39 @@ screen_width = 100
 class Player():
     
     def __init__(self):
-        # Expects string for name. 
+        # Player class.
         self.name = ""
         self.will = 100
         self.solves = 0
         self.location = 'c2'
         self.gameover = False
+
+#### Item placeholder ####
+class Item():
+
+    def __init__(self, name, description):
+        # Base class for items.
+        self.name = name
+        self.description =  description
+
+    def __str__(self):
+        return
+
+#### People ####
+
+class Person():
+
+    def __init__(self,name):
+        self.name = name
+
+class ITGuy(Person):
+
+    def __init__(self):
+        super().__init__(name="IT Guy")
+
+    def battle(self):
+        print()
+
         
 myPlayer = Player()
         
@@ -95,7 +122,7 @@ def setup_game():
     typewriter(question2)
     degree = input("\n> ")
     while not degree:
-        print("Surely you went to college.")
+        typewriter("Surely you went to college.")
         typewriter("What was your degree?")
         degree = input("\n> ")
 
@@ -119,7 +146,7 @@ def setup_game():
     introduction = dedent("""             
                "Welcome to Synergistic Conglomerates International!
                
-               Congratulations on being accepted for our fall intership!
+               Congratulations on being accepted for our fall internship!
                You were the most accomplished applicant to also have 
                passed a drug screening! 
                
@@ -142,11 +169,10 @@ def setup_game():
 def print_location():
     print('\n' + ('#' * (4 + len(myPlayer.location))))
     print('# ' + myPlayer.location + ' #')
-    print('# ' + worldmap[myPlayer.location]["DESCRIPTION"] + ' #')
+    print('# ' + worldmap[myPlayer.location]["ZONENAME"] + ' #')
     print('\n' + ('#' * (4 + len(myPlayer.location))))
 
 def world_prompt():
-    # What are valid actions? Quit, move, look, talk, open
     print("\n" + "====================")
     print("What would you like to do?\n")
     print("move, look, talk, location, open or quit?\n")
@@ -155,19 +181,27 @@ def world_prompt():
     while action.lower() not in valid_actions:
         print("Invalid command. Try again friend.")
         action = input("> ")
-    if action.lower() == "quit":
+    if action.lower().strip() == "quit":
         sys.exit()
-    elif action.lower() == "move":
+    elif action.lower().strip() == "move":
         move(action.lower())
-    elif action.lower() == "look":
+    elif action.lower().strip() == "look":
         look(action.lower())
-    elif action.lower() == "open":
+    elif action.lower().strip() == "talk":
+        battle_prompt()
+    elif action.lower().strip() == "open":
         open_it(action.lower())
-    elif action.lower() == "location":
+    elif action.lower().strip() == "location":
         print_location()
 
 def battle_prompt():
-    pass
+    if worldmap[myPlayer.location]["SOLVED"]:
+        print("Do you really want to have this conversation again?")
+    elif worldmap[myPlayer.location]["PERSON"] == "ITGuy":
+        ITGuy()
+
+
+
 
 def move(action):
     print("\nOk, let's meander around the office!\n"
@@ -193,15 +227,16 @@ def movement(destination):
     print_location()
 
 def look(action):
-    if zonemap[myPlayer.location]["SOLVED"]:
+    if worldmap[myPlayer.location]["SOLVED"]:
         print("You've already seen whatever can be seen.")
     else:
-        print('Do something here')
+        print(dedent(worldmap[myPlayer.location]["DESCRIPTION"]))
 
 def open_it():
-    pass
-
-
+    if worldmap[myPlayer.location]["SOLVED"]:
+        print("You've already ransacked the place.")
+    else:
+        pass
 
 
     
@@ -213,7 +248,7 @@ def main_game():
         # Here handle boss defeated, puzzles solves, etc...
 
 
-
+#### Scenarios ####
 
 
 
@@ -222,7 +257,7 @@ def main_game():
 """
    A       B      C
 ------------------------
-| BOSS |       |       | 1
+| BOSS |       | Conf  | 1
 ------------------------
 |      | Prick | START | 2
 ------------------------ 
@@ -235,7 +270,7 @@ def main_game():
 
 ZONENAME = ""
 DESCRIPTION = "description"
-EXAMINATION = "examine"
+LOOK = "examine"
 SOLVED = False
 UP = "up", "north"
 DOWN = "down", "south"
@@ -250,7 +285,9 @@ solved_places = {"a1": False, "a2": False, "a3": False, "a4": False,
 worldmap = {"a1": {
                    "ZONENAME": "Boss's office",
                    "DESCRIPTION": 'description',
-                   "EXAMINATION": 'examine',
+                   "LOOK": 'examine',
+                   "OPEN": "opened",
+                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "",
                    "DOWN": "a2",
@@ -260,7 +297,9 @@ worldmap = {"a1": {
             "a2": {
                    "ZONENAME": "",
                    "DESCRIPTION": "description",
-                   "EXAMINATION": 'examine',
+                   "LOOK": 'examine',
+                   "OPEN": "opened",
+                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "a1",
                    "DOWN": "a3",
@@ -270,7 +309,9 @@ worldmap = {"a1": {
             "a3": {
                     "ZONENAME": "Kitchen",
                     "DESCRIPTION": 'description',
-                    "EXAMINATION": "examine",
+                    "LOOK": "examine",
+                    "OPEN": "opened",
+                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "a2",
                     "DOWN": "a4",
@@ -280,7 +321,9 @@ worldmap = {"a1": {
             "a4": {
                     "ZONENAME": "",
                     "DESCRIPTION": 'description',
-                    "EXAMINATION": 'examine',
+                    "LOOK": 'examine',
+                    "OPEN": "opened",
+                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "a3",
                     "DOWN": "",
@@ -290,7 +333,9 @@ worldmap = {"a1": {
             "b1": {
                    "ZONENAME": "",
                    "DESCRIPTION": 'description',
-                   "EXAMINATION": 'examine',
+                   "LOOK": 'examine',
+                   "OPEN": "opened",
+                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "",
                    "DOWN": "b2",
@@ -300,7 +345,9 @@ worldmap = {"a1": {
             "b2": {
                    "ZONENAME": "Sales lead's office",
                    "DESCRIPTION": "It's an office, baby.",
-                   "EXAMINATION": 'examine',
+                   "LOOK": 'examine',
+                   "OPEN": "opened",
+                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "b1",
                    "DOWN": "b3",
@@ -310,7 +357,9 @@ worldmap = {"a1": {
             "b3": {
                     "ZONENAME": "Financial Analyst's office",
                     "DESCRIPTION": 'description',
-                    "EXAMINATION": 'examine',
+                    "LOOK": 'examine',
+                    "OPEN": "opened",
+                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "b2",
                     "DOWN": "b4",
@@ -320,7 +369,9 @@ worldmap = {"a1": {
             "b4": {
                     "ZONENAME": "Printer room",
                     "DESCRIPTION": 'description',
-                    "EXAMINATION": 'examine',
+                    "LOOK": 'examine',
+                    "OPEN": "opened",
+                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "b3",
                     "DOWN": "",
@@ -328,9 +379,11 @@ worldmap = {"a1": {
                     "RIGHT": "c4",
                    },
             "c1": {
-                   "ZONENAME": "",
+                   "ZONENAME": "Conference Room",
                    "DESCRIPTION": 'description',
-                   "EXAMINATION": 'examine',
+                   "LOOK": 'examine',
+                   "OPEN": "opened",
+                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "",
                    "DOWN": "c2",
@@ -340,7 +393,9 @@ worldmap = {"a1": {
             "c2": {
                    "ZONENAME": "startzone",
                    "DESCRIPTION": "A converted storage closet.",
-                   "EXAMINATION": 'examine',
+                   "LOOK": 'examine',
+                   "OPEN": "opened",
+                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "c1",
                    "DOWN": "c3",
@@ -350,7 +405,9 @@ worldmap = {"a1": {
             "c3": {
                     "ZONENAME": "",
                     "DESCRIPTION": 'description',
-                    "EXAMINATION": 'examine',
+                    "LOOK": 'examine',
+                    "OPEN": "opened",
+                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "c2",
                     "DOWN": "c4",
@@ -358,9 +415,12 @@ worldmap = {"a1": {
                     "RIGHT": "",
                    },
             "c4": {
-                    "ZONENAME": "IT room",
-                    "DESCRIPTION": 'description',
-                    "EXAMINATION": 'examine',
+                    "ZONENAME": "IT Room",
+                    "DESCRIPTION": "The room is crowded with boxes of cables, broken servers and "
+                                   "a sullen looking man staring at his computer screen",
+                    "LOOK": 'examine',
+                    "OPEN": "opened",
+                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "c3",
                     "DOWN": "",
