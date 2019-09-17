@@ -22,32 +22,6 @@ class Player():
         self.location = 'c2'
         self.gameover = False
 
-#### Item placeholder ####
-class Item():
-
-    def __init__(self, name, description):
-        # Base class for items.
-        self.name = name
-        self.description =  description
-
-    def __str__(self):
-        return
-
-#### People ####
-
-class Person():
-
-    def __init__(self,name):
-        self.name = name
-
-class ITGuy(Person):
-
-    def __init__(self):
-        super().__init__(name="IT Guy")
-
-    def battle(self):
-        print()
-
         
 myPlayer = Player()
         
@@ -97,8 +71,22 @@ def title_screen_selection():
             sys.exit()
     
 def help_menu():
-    print("Use up, down, left, right to navigate.")
-    print("")
+    print(dedent("""
+             Your goal will be to have a conversation with your boss 
+             before you lose the will to live.
+             
+             Your interactions with your co-workers and the office can either 
+             increase or decrease your will to live.
+             
+             If your will to live reaches zero, then...              
+                           
+                         #############################
+                         #         CONTROLS          #
+                         #############################
+    
+             - Valid actions are move, look, talk, location, open or quit
+                           """))
+    print("Would you like to play or quit?")
     title_screen_selection()
 
 def setup_game():
@@ -144,7 +132,7 @@ def setup_game():
     print("                  #### GAME START ####")
     time.sleep(0.5)
     introduction = dedent("""             
-               "Welcome to Synergistic Conglomerates International!
+               'Welcome to Synergistic Conglomerates International!
                
                Congratulations on being accepted for our fall internship!
                You were the most accomplished applicant to also have 
@@ -152,9 +140,9 @@ def setup_game():
                
                This will be your office. If you need anything, just let
                me know. My office is on a floor you don't have access to,
-               but feel free to give me a jingle, hokay!?"
+               but feel free to give me a jingle, hokay!?'
                
-               "Was there just a wizened old man here?" you start to ask,
+               You start to ask if there was just a wizened old man there,
                but she's already closed the door behind her.
                
                """)
@@ -198,12 +186,15 @@ def battle_prompt():
     if worldmap[myPlayer.location]["SOLVED"]:
         print("Do you really want to have this conversation again?")
     elif worldmap[myPlayer.location]["PERSON"] == "ITGuy":
-        ITGuy()
+        itguy()
+
+
 
 
 
 
 def move(action):
+    print("\n" + "====================")
     print("\nOk, let's meander around the office!\n"
           "Which way would you like to " + action + "?\n")
     dest = input("> ")
@@ -250,6 +241,40 @@ def main_game():
 
 #### Scenarios ####
 
+def itguy():
+    typewriter("You say hello.")
+    typewriter(""""..."""")
+    print("Would you like to flirt, ")
+    action = input("> ")
+
+
+def prick():
+    if
+    pass
+
+def receptionist():
+    pass
+
+def boss():
+    pass
+
+def vaxxer():
+    pass
+
+def hottie():
+    pass
+
+def printer():
+    pass
+
+def conference_room():
+    pass
+
+def kitchen():
+    pass
+
+
+
 
 
 ### MAP ###
@@ -257,7 +282,7 @@ def main_game():
 """
    A       B      C
 ------------------------
-| BOSS |       | Conf  | 1
+| BOSS | Recept| Conf  | 1
 ------------------------
 |      | Prick | START | 2
 ------------------------ 
