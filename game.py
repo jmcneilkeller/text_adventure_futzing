@@ -84,7 +84,7 @@ def help_menu():
                          #         CONTROLS          #
                          #############################
     
-             - Valid actions are move, look, talk, location, open or quit
+             - Valid actions are move, look, talk, location, open or quit.
                            """))
     print("Would you like to play or quit?")
     title_screen_selection()
@@ -187,9 +187,7 @@ def battle_prompt():
         print("Do you really want to have this conversation again?")
     elif worldmap[myPlayer.location]["PERSON"] == "ITGuy":
         itguy()
-
-
-
+    elif
 
 
 
@@ -312,7 +310,6 @@ worldmap = {"a1": {
                    "DESCRIPTION": 'description',
                    "LOOK": 'examine',
                    "OPEN": "opened",
-                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "",
                    "DOWN": "a2",
@@ -324,7 +321,6 @@ worldmap = {"a1": {
                    "DESCRIPTION": "description",
                    "LOOK": 'examine',
                    "OPEN": "opened",
-                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "a1",
                    "DOWN": "a3",
@@ -336,7 +332,6 @@ worldmap = {"a1": {
                     "DESCRIPTION": 'description',
                     "LOOK": "examine",
                     "OPEN": "opened",
-                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "a2",
                     "DOWN": "a4",
@@ -348,7 +343,6 @@ worldmap = {"a1": {
                     "DESCRIPTION": 'description',
                     "LOOK": 'examine',
                     "OPEN": "opened",
-                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "a3",
                     "DOWN": "",
@@ -360,7 +354,6 @@ worldmap = {"a1": {
                    "DESCRIPTION": 'description',
                    "LOOK": 'examine',
                    "OPEN": "opened",
-                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "",
                    "DOWN": "b2",
@@ -372,7 +365,6 @@ worldmap = {"a1": {
                    "DESCRIPTION": "It's an office, baby.",
                    "LOOK": 'examine',
                    "OPEN": "opened",
-                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "b1",
                    "DOWN": "b3",
@@ -384,7 +376,6 @@ worldmap = {"a1": {
                     "DESCRIPTION": 'description',
                     "LOOK": 'examine',
                     "OPEN": "opened",
-                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "b2",
                     "DOWN": "b4",
@@ -396,7 +387,6 @@ worldmap = {"a1": {
                     "DESCRIPTION": 'description',
                     "LOOK": 'examine',
                     "OPEN": "opened",
-                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "b3",
                     "DOWN": "",
@@ -408,7 +398,6 @@ worldmap = {"a1": {
                    "DESCRIPTION": 'description',
                    "LOOK": 'examine',
                    "OPEN": "opened",
-                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "",
                    "DOWN": "c2",
@@ -420,7 +409,6 @@ worldmap = {"a1": {
                    "DESCRIPTION": "A converted storage closet.",
                    "LOOK": 'examine',
                    "OPEN": "opened",
-                   "PERSON": "person",
                    "SOLVED": False,
                    "UP": "c1",
                    "DOWN": "c3",
@@ -432,7 +420,6 @@ worldmap = {"a1": {
                     "DESCRIPTION": 'description',
                     "LOOK": 'examine',
                     "OPEN": "opened",
-                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "c2",
                     "DOWN": "c4",
@@ -445,7 +432,6 @@ worldmap = {"a1": {
                                    "a sullen looking man staring at his computer screen",
                     "LOOK": 'examine',
                     "OPEN": "opened",
-                    "PERSON": "person",
                     "SOLVED": False,
                     "UP": "c3",
                     "DOWN": "",
