@@ -131,33 +131,33 @@ def setup_game():
     # INTRODUCTION #
     print("                  #### GAME START ####")
     time.sleep(0.5)
-    introduction = dedent("""             
-               'Welcome to Synergistic Conglomerates International!
-               
-               Congratulations on being accepted for our fall internship!
-               You were the most accomplished applicant to also have 
-               passed a drug screening! 
-               
-               This will be your office. If you need anything, just let
-               me know. My office is on a floor you don't have access to,
-               but feel free to give me a jingle, hokay!?'
-               
-               You start to ask if there was just a wizened old man there,
-               but she's already closed the door behind her.
-               
-               """)
-    typewriter(introduction,0.0001)
+    ### UNCOMMENT ONCE TESTING IS DONE! ###
+    # introduction = dedent("""
+    #            'Welcome to Synergistic Conglomerates International!
+    #
+    #            Congratulations on being accepted for our fall internship!
+    #            You were the most accomplished applicant to also have
+    #            passed a drug screening!
+    #
+    #            This will be your office. If you need anything, just let
+    #            me know. My office is on a floor you don't have access to,
+    #            but feel free to give me a jingle, hokay!?'
+    #
+    #            You start to ask if there was just a wizened old man there,
+    #            but she's already closed the door behind her.
+    #
+    #            """)
+    # typewriter(introduction,0.0001)
     main_game()
 
 ### GAME INTERACTIVITY ###
 
 # Add specific "battle" prompt functionality.
 
-
 def print_location():
     print('\n' + ('#' * (4 + len(myPlayer.location))))
     print('# ' + myPlayer.location + ' #')
-    print('# ' + worldmap[myPlayer.location]["ZONENAME"] + ' #')
+    print('# ' + myPlayer.location["ZONENAME"] + ' #')
     print('\n' + ('#' * (4 + len(myPlayer.location))))
 
 def world_prompt():
@@ -176,19 +176,11 @@ def world_prompt():
     elif action.lower().strip() == "look":
         look(action.lower())
     elif action.lower().strip() == "talk":
-        battle_prompt()
+        battle_prompt(myPlayer.location)
     elif action.lower().strip() == "open":
         open_it(action.lower())
     elif action.lower().strip() == "location":
         print_location()
-
-def battle_prompt():
-    if worldmap[myPlayer.location]["SOLVED"]:
-        print("Do you really want to have this conversation again?")
-    elif worldmap[myPlayer.location]["PERSON"] == "ITGuy":
-        itguy()
-    elif
-
 
 
 def move(action):
@@ -197,32 +189,31 @@ def move(action):
           "Which way would you like to " + action + "?\n")
     dest = input("> ")
     if dest.lower() == 'up':
-        destination = worldmap[myPlayer.location]["UP"]
-        print_location()
+        destination = myPlayer.location["UP"]
         movement(destination)
     elif dest.lower() == 'down':
-        destination = worldmap[myPlayer.location]["DOWN"]
+        destination = myPlayer.location["DOWN"]
         movement(destination)
     elif dest.lower() == 'left':
-        destination = worldmap[myPlayer.location]["LEFT"]
+        destination = myPlayer.location["LEFT"]
         movement(destination)
     elif dest.lower() == 'right':
-        destination = worldmap[myPlayer.location]["RIGHT"]
+        destination = myPlayer.location["RIGHT"]
         movement(destination)
 
 def movement(destination):
-    print("\nYou have moved to " + worldmap[destination]["ZONENAME"] + ".")
+    print("\nYou have moved to " + destination["ZONENAME"] + ".")
     myPlayer.location = destination
     print_location()
 
 def look(action):
-    if worldmap[myPlayer.location]["SOLVED"]:
+    if myPlayer.location["SOLVED"]:
         print("You've already seen whatever can be seen.")
     else:
-        print(dedent(worldmap[myPlayer.location]["DESCRIPTION"]))
+        print(dedent(myPlayer.location["DESCRIPTION"]))
 
 def open_it():
-    if worldmap[myPlayer.location]["SOLVED"]:
+    if myPlayer.location["SOLVED"]:
         print("You've already ransacked the place.")
     else:
         pass
@@ -239,40 +230,54 @@ def main_game():
 
 #### Scenarios ####
 
-def itguy():
+def c4():
+    # IT guy scenario.
     typewriter("You say hello.")
-    typewriter(""""..."""")
-    print("Would you like to flirt, ")
+    typewriter("'...'")
+    print("Would you like to flirt? ")
     action = input("> ")
 
 
-def prick():
-    if
+def b2():
+    # Prick scenario
+    print("Successful test!")
+
+
+def b1():
+    # Receptionist scenario.
+    print("Something")
+
+def a1():
+    # Boss scenario
+    print("Something")
+
+def b3():
+    # Anti-vaxxer scenario
     pass
 
-def receptionist():
-    pass
-
-def boss():
-    pass
-
-def vaxxer():
-    pass
-
-def hottie():
+def c3():
+    # Hottie scenario
     pass
 
 def printer():
+    # Printer scenario
     pass
 
 def conference_room():
+    # Conference room scenario
     pass
 
 def kitchen():
+    #
     pass
 
+room_dict = {"a1": a1, "b1": b1, "b2": b2}
 
-
+def battle_prompt(location):
+    if myPlayer.location["SOLVED"]:
+        print("Do you really want to have this conversation again?")
+    else:
+        room_dict[location]()
 
 
 ### MAP ###
