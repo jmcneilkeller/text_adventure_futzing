@@ -230,26 +230,17 @@ def main_game():
 
 #### Scenarios ####
 
-def c4():
-    # IT guy scenario.
-    typewriter("You say hello.")
-    typewriter("'...'")
-    print("Would you like to flirt? ")
-    action = input("> ")
-
-
-def b2():
-    # Prick scenario
-    print("Successful test!")
-
+def a1():
+    # Boss scenario
+    print("Something")
 
 def b1():
     # Receptionist scenario.
     print("Something")
 
-def a1():
-    # Boss scenario
-    print("Something")
+def b2():
+    # Prick scenario
+    print("Successful test!")
 
 def b3():
     # Anti-vaxxer scenario
@@ -258,6 +249,13 @@ def b3():
 def c3():
     # Hottie scenario
     pass
+
+def c4():
+    # IT guy scenario.
+    typewriter("You say hello.")
+    typewriter("'...'")
+    print("Would you like to flirt? ")
+    action = input("> ")
 
 def printer():
     # Printer scenario
