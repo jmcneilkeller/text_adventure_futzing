@@ -105,26 +105,26 @@ def setup_game():
             player_name = myPlayer.name
             break
 
-    # DEGREE FAKE OUT
-    question2 = "\nVery good! Yes, very good.\nAnd what kind of degree do you have, " + player_name + "?"
-    typewriter(question2)
-    degree = input("\n> ")
-    while not degree:
-        typewriter("Surely you went to college.")
-        typewriter("What was your degree?")
-        degree = input("\n> ")
-
-    soulcrush1 = "\n" + degree + ", eh? Well, that's pretty useless here.\n"
-    soulcrush2 = "You're an intern now...\n"
-    soulcrush3 = dedent(""" 
-                           ** Thunder flashes and lightning crackles **
-                                   The old man disappears...
-                        """)
-    
-    typewriter(soulcrush1)
-    typewriter(soulcrush2)
-    typewriter(soulcrush3)
-    time.sleep(2)
+    # DEGREE FAKE OUT #### UNCOMMENT ONCE DEBUGGING IS COMPLETE. #####
+    # question2 = "\nVery good! Yes, very good.\nAnd what kind of degree do you have, " + player_name + "?"
+    # typewriter(question2)
+    # degree = input("\n> ")
+    # while not degree:
+    #     typewriter("Surely you went to college.")
+    #     typewriter("What was your degree?")
+    #     degree = input("\n> ")
+    #
+    # soulcrush1 = "\n" + degree + ", eh? Well, that's pretty useless here.\n"
+    # soulcrush2 = "You're an intern now...\n"
+    # soulcrush3 = dedent("""
+    #                        ** Thunder flashes and lightning crackles **
+    #                                The old man disappears...
+    #                     """)
+    #
+    # typewriter(soulcrush1)
+    # typewriter(soulcrush2)
+    # typewriter(soulcrush3)
+    # time.sleep(2)
 
     os.system('clear')
 
@@ -157,7 +157,7 @@ def setup_game():
 def print_location():
     print('\n' + ('#' * (4 + len(myPlayer.location))))
     print('# ' + myPlayer.location + ' #')
-    print('# ' + myPlayer.location["ZONENAME"] + ' #')
+    print('# ' + worldmap[myPlayer.location][ZONENAME] + ' #')
     print('\n' + ('#' * (4 + len(myPlayer.location))))
 
 def world_prompt():
@@ -189,31 +189,31 @@ def move(action):
           "Which way would you like to " + action + "?\n")
     dest = input("> ")
     if dest.lower() == 'up':
-        destination = myPlayer.location["UP"]
+        destination = worldmap[myPlayer.location][UP]
         movement(destination)
     elif dest.lower() == 'down':
-        destination = myPlayer.location["DOWN"]
+        destination = worldmap[myPlayer.location][DOWN]
         movement(destination)
     elif dest.lower() == 'left':
-        destination = myPlayer.location["LEFT"]
+        destination = worldmap[myPlayer.location][LEFT]
         movement(destination)
     elif dest.lower() == 'right':
-        destination = myPlayer.location["RIGHT"]
+        destination = worldmap[myPlayer.location][RIGHT]
         movement(destination)
 
 def movement(destination):
-    print("\nYou have moved to " + destination["ZONENAME"] + ".")
+    print("\nYou have moved to " + worldmap[destination][ZONENAME] + ".")
     myPlayer.location = destination
     print_location()
 
 def look(action):
-    if myPlayer.location["SOLVED"]:
+    if worldmap[myPlayer.location][SOLVED]:
         print("You've already seen whatever can be seen.")
     else:
-        print(dedent(myPlayer.location["DESCRIPTION"]))
+        print(worldmap[myPlayer.location][DESCRIPTION])
 
-def open_it():
-    if myPlayer.location["SOLVED"]:
+def open_it(action):
+    if worldmap[myPlayer.location][SOLVED]:
         print("You've already ransacked the place.")
     else:
         pass
@@ -254,8 +254,52 @@ def c4():
     # IT guy scenario.
     typewriter("You say hello.")
     typewriter("'...'")
-    print("Would you like to flirt? ")
+    print(dedent("""Would you like to:
+                 1. Clap your hands and say: 'Hey! I'm talking here!'
+                 2. Introduce yourself.
+                 3. Try to find something to say about the Star Trek poster on the wall.
+                 Enter 1, 2 or 3.
+                  """))
     action = input("> ")
+    if action ==1:
+        print("He sniffs and starts to type on his keyboard."
+              "\nYour phone starts to beep loudly, then powers down. You can't get it back on."
+              "\nYour will to live has decreased by 30 points. You are also kind of an asshole.")
+        myPlayer.will -= 30
+        world_prompt()
+    elif action == 2:
+        print("'....'")
+        print(dedent("""Would you like to:
+                     1. 
+                     2. 
+                     3. 
+                     Enter 1, 2 or 3.
+                     """))
+    elif action == 3:
+        print(dedent("""He sniffs. 'What was the name of the Romulan captain Kirk does battle with
+                 in the seminal episode Balance of Terror?'
+                 
+                 Enter 1, 2 or 3:
+                 1. Spock.
+                 2. Fluttershy.
+                 3. Sarek.
+                 """))
+        action = input("> ")
+        if action == 1:
+            print("")
+        elif action == 2:
+            print("He looks at you with disgust, and puts ")
+        elif action == 3:
+            print("'Trick question. He is unnamed.' "
+                  "\n He puts his headphones on and ignores you."
+                  "\n Your will to live decreases by 10 points.")
+            myPlayer.will -= 10
+            world_prompt()
+        else:
+            print("Not an option.\nInput 1, 2 or 3.")
+
+    else:
+        print("Not an option.\nInput 1, 2 or 3.")
 
 def printer():
     # Printer scenario
@@ -272,8 +316,14 @@ def kitchen():
 room_dict = {"a1": a1, "b1": b1, "b2": b2}
 
 def battle_prompt(location):
-    if myPlayer.location["SOLVED"]:
+    if worldmap[myPlayer.location][SOLVED]:
         print("Do you really want to have this conversation again?")
+        world_prompt()
+    elif myPlayer.location in ["c1","a3","b4"]:
+        print("Ummm...there is no one in the room. Who are you talking to?")
+        myPlayer.will -= 5
+        print("Your will to live has decreased by five points.")
+        world_prompt()
     else:
         room_dict[location]()
 
@@ -296,7 +346,7 @@ def battle_prompt(location):
 
 ZONENAME = ""
 DESCRIPTION = "description"
-LOOK = "examine"
+OPEN = "opened"
 SOLVED = False
 UP = "up", "north"
 DOWN = "down", "south"
@@ -309,137 +359,126 @@ solved_places = {"a1": False, "a2": False, "a3": False, "a4": False,
                  }
     
 worldmap = {"a1": {
-                   "ZONENAME": "Boss's office",
-                   "DESCRIPTION": 'description',
-                   "LOOK": 'examine',
-                   "OPEN": "opened",
-                   "SOLVED": False,
-                   "UP": "",
-                   "DOWN": "a2",
-                   "LEFT": "",
-                   "RIGHT": "b1",
+                   ZONENAME: "Boss's office",
+                   DESCRIPTION: 'description',
+                   OPEN: "opened",
+                   SOLVED: False,
+                   UP: "",
+                   DOWN: "a2",
+                   LEFT: "",
+                   RIGHT: "b1",
                   },
             "a2": {
-                   "ZONENAME": "",
-                   "DESCRIPTION": "description",
-                   "LOOK": 'examine',
-                   "OPEN": "opened",
-                   "SOLVED": False,
-                   "UP": "a1",
-                   "DOWN": "a3",
-                   "LEFT": "",
-                   "RIGHT": "b2",
+                   ZONENAME: "",
+                   DESCRIPTION: "description",
+                   OPEN: "opened",
+                   SOLVED: False,
+                   UP: "a1",
+                   DOWN: "a3",
+                   LEFT: "",
+                   RIGHT: "b2",
                   },
             "a3": {
-                    "ZONENAME": "Kitchen",
-                    "DESCRIPTION": 'description',
-                    "LOOK": "examine",
-                    "OPEN": "opened",
-                    "SOLVED": False,
-                    "UP": "a2",
-                    "DOWN": "a4",
-                    "LEFT": "",
-                    "RIGHT": "b3",
+                    ZONENAME: "Kitchen",
+                    DESCRIPTION: 'description',
+                    OPEN: "opened",
+                    SOLVED: False,
+                    UP: "a2",
+                    DOWN: "a4",
+                    LEFT: "",
+                    RIGHT: "b3",
                    },
             "a4": {
-                    "ZONENAME": "",
-                    "DESCRIPTION": 'description',
-                    "LOOK": 'examine',
-                    "OPEN": "opened",
-                    "SOLVED": False,
-                    "UP": "a3",
-                    "DOWN": "",
-                    "LEFT": "",
-                    "RIGHT": "b4",
+                    ZONENAME: "",
+                    DESCRIPTION: 'description',
+                    OPEN: "opened",
+                    SOLVED: False,
+                    UP: "a3",
+                    DOWN: "",
+                    LEFT: "",
+                    RIGHT: "b4",
                    },
             "b1": {
-                   "ZONENAME": "",
-                   "DESCRIPTION": 'description',
-                   "LOOK": 'examine',
-                   "OPEN": "opened",
-                   "SOLVED": False,
-                   "UP": "",
-                   "DOWN": "b2",
-                   "LEFT": "a1",
-                   "RIGHT": "c1",
+                   ZONENAME: "",
+                   DESCRIPTION: 'description',
+                   OPEN: "opened",
+                   SOLVED: False,
+                   UP: "",
+                   DOWN: "b2",
+                   LEFT: "a1",
+                   RIGHT: "c1",
                   },
             "b2": {
-                   "ZONENAME": "Sales lead's office",
-                   "DESCRIPTION": "It's an office, baby.",
-                   "LOOK": 'examine',
-                   "OPEN": "opened",
-                   "SOLVED": False,
-                   "UP": "b1",
-                   "DOWN": "b3",
-                   "LEFT": "a2",
-                   "RIGHT": "c2",
+                   ZONENAME: "Sales lead's office",
+                   DESCRIPTION: "It's an office, baby.",
+                   OPEN: "opened",
+                   SOLVED: False,
+                   UP: "b1",
+                   DOWN: "b3",
+                   LEFT: "a2",
+                   RIGHT: "c2",
                   },
             "b3": {
-                    "ZONENAME": "Financial Analyst's office",
-                    "DESCRIPTION": 'description',
-                    "LOOK": 'examine',
-                    "OPEN": "opened",
-                    "SOLVED": False,
-                    "UP": "b2",
-                    "DOWN": "b4",
-                    "LEFT": "a3",
-                    "RIGHT": "c3",
+                    ZONENAME: "Financial Analyst's office",
+                    DESCRIPTION: 'description',
+                    OPEN: "opened",
+                    SOLVED: False,
+                    UP: "b2",
+                    DOWN: "b4",
+                    LEFT: "a3",
+                    RIGHT: "c3",
                    },
             "b4": {
-                    "ZONENAME": "Printer room",
-                    "DESCRIPTION": 'description',
-                    "LOOK": 'examine',
-                    "OPEN": "opened",
-                    "SOLVED": False,
-                    "UP": "b3",
-                    "DOWN": "",
-                    "LEFT": "a4",
-                    "RIGHT": "c4",
+                    ZONENAME: "Printer room",
+                    DESCRIPTION: 'description',
+                    OPEN: "opened",
+                    SOLVED: False,
+                    UP: "b3",
+                    DOWN: "",
+                    LEFT: "a4",
+                    RIGHT: "c4",
                    },
             "c1": {
-                   "ZONENAME": "Conference Room",
-                   "DESCRIPTION": 'description',
-                   "LOOK": 'examine',
-                   "OPEN": "opened",
-                   "SOLVED": False,
-                   "UP": "",
-                   "DOWN": "c2",
-                   "LEFT": "b1",
-                   "RIGHT": "",
+                   ZONENAME: "Conference Room",
+                   DESCRIPTION: 'description',
+                   OPEN: "opened",
+                   SOLVED: False,
+                   UP: "",
+                   DOWN: "c2",
+                   LEFT: "b1",
+                   RIGHT: "",
                   },
             "c2": {
-                   "ZONENAME": "startzone",
-                   "DESCRIPTION": "A converted storage closet.",
-                   "LOOK": 'examine',
-                   "OPEN": "opened",
-                   "SOLVED": False,
-                   "UP": "c1",
-                   "DOWN": "c3",
-                   "LEFT": "b2",
-                   "RIGHT": "",
+                   ZONENAME: "startzone",
+                   DESCRIPTION: "Your 'office' is in a converted storage closet.\n"
+                                  "Your mouse and keyboard are there, but they've neglected to give you a monitor.",
+                   OPEN: "opened",
+                   SOLVED: False,
+                   UP: "c1",
+                   DOWN: "c3",
+                   LEFT: "b2",
+                   RIGHT: "",
                   },
             "c3": {
-                    "ZONENAME": "",
-                    "DESCRIPTION": 'description',
-                    "LOOK": 'examine',
-                    "OPEN": "opened",
-                    "SOLVED": False,
-                    "UP": "c2",
-                    "DOWN": "c4",
-                    "LEFT": "b3",
-                    "RIGHT": "",
+                    ZONENAME: "",
+                    DESCRIPTION: 'description',
+                    OPEN: "opened",
+                    SOLVED: False,
+                    UP: "c2",
+                    DOWN: "c4",
+                    LEFT: "b3",
+                    RIGHT: "",
                    },
             "c4": {
-                    "ZONENAME": "IT Room",
-                    "DESCRIPTION": "The room is crowded with boxes of cables, broken servers and "
-                                   "a sullen looking man staring at his computer screen",
-                    "LOOK": 'examine',
-                    "OPEN": "opened",
-                    "SOLVED": False,
-                    "UP": "c3",
-                    "DOWN": "",
-                    "LEFT": "b4",
-                    "RIGHT": "",
+                    ZONENAME: "IT Room",
+                    DESCRIPTION: "The room is crowded with boxes of cables, broken servers and "
+                                   "\na sullen looking man staring at his computer screen.",
+                    OPEN: "opened",
+                    SOLVED: False,
+                    UP: "c3",
+                    DOWN: "",
+                    LEFT: "b4",
+                    RIGHT: "",
                    }
 
 }  
