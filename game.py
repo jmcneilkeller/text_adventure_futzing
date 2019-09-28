@@ -278,17 +278,16 @@ def c4():
     elif action == 3:
         print(dedent("""He sniffs. 'What was the name of the Romulan captain Kirk does battle with
                  in the seminal episode Balance of Terror?'
-                 
                  Enter 1, 2 or 3:
                  1. Spock.
                  2. Fluttershy.
-                 3. Sarek.
+                 3. Saavak.
                  """))
         action = input("> ")
         if action == 1:
             print("")
         elif action == 2:
-            print("He looks at you with disgust, and puts ")
+            print("He looks at you with disgust, and puts his headphones on.")
         elif action == 3:
             print("'Trick question. He is unnamed.' "
                   "\n He puts his headphones on and ignores you."
