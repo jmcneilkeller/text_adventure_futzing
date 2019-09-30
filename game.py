@@ -166,7 +166,7 @@ def world_prompt():
     print("move, look, talk, location, open or quit?\n")
     action = input("> ")
     valid_actions = ["move", "quit", "look", "talk", "open", "location"]
-    while action.lower() not in valid_actions:
+    while action.lower().strip() not in valid_actions:
         print("Invalid command. Try again friend.")
         action = input("> ")
     if action.lower().strip() == "quit":
@@ -188,16 +188,21 @@ def move(action):
     print("\nOk, let's meander around the office!\n"
           "Which way would you like to " + action + "?\n")
     dest = input("> ")
-    if dest.lower() == 'up':
+    directions = ["up", "down", "left", "right"]
+    while dest.lower().strip() not in directions:
+        print("Nope, you can't move that way.")
+        print("\nWhich way would you like to " + action + "?\n")
+        dest = input("> ")
+    if dest.lower().strip() == 'up':
         destination = worldmap[myPlayer.location][UP]
         movement(destination)
-    elif dest.lower() == 'down':
+    elif dest.lower().strip() == 'down':
         destination = worldmap[myPlayer.location][DOWN]
         movement(destination)
-    elif dest.lower() == 'left':
+    elif dest.lower().strip() == 'left':
         destination = worldmap[myPlayer.location][LEFT]
         movement(destination)
-    elif dest.lower() == 'right':
+    elif dest.lower().strip() == 'right':
         destination = worldmap[myPlayer.location][RIGHT]
         movement(destination)
 
@@ -261,9 +266,9 @@ def c4():
                  Enter 1, 2 or 3.
                   """))
     action = input("> ")
-    if action ==1:
+    if action == 1:
         print("He sniffs and starts to type on his keyboard."
-              "\nYour phone starts to beep loudly, then powers down. You can't get it back on."
+              "\nYour phone starts to beep loudly, then powers down abruptly. You can't get it back on."
               "\nYour will to live has decreased by 30 points. You are also kind of an asshole.")
         myPlayer.will -= 30
         world_prompt()
@@ -285,9 +290,15 @@ def c4():
                  """))
         action = input("> ")
         if action == 1:
-            print("")
+            print("He shakes his head and puts his headphones on.")
+            print("Your will to live decreases by 10 points.")
+            myPlayer.will -= 10
+            world_prompt()
         elif action == 2:
             print("He looks at you with disgust, and puts his headphones on.")
+            print("\nYour live decreases by 20 points.")
+            myPlayer.will -= 20
+            world_prompt()
         elif action == 3:
             print("'Trick question. He is unnamed.' "
                   "\n He puts his headphones on and ignores you."
