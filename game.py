@@ -44,6 +44,7 @@ def typewriter(text, start=None, stop=None):
 def title_screen():
     os.system('clear')
     print(dedent("""
+   
                     #############################
                     ##### Intern: The Game ######
                     #############################
@@ -223,6 +224,8 @@ def open_it(action):
     else:
         pass
 
+def gameover():
+
 
     
 ### GAME FUNCTIONALITY ###
@@ -237,11 +240,17 @@ def main_game():
 
 def a1():
     # Boss scenario
-    print("Something")
+    while worldmap["b1"][SOLVED] == False:
+        print("Your boss looks up. 'Who're you?'")
+        print("Your boss doesn't know your name. Your will to live reduces to zero")
+        gameover()
+    print("Successful test!")
 
 def b1():
     # Receptionist scenario.
-    print("Something")
+    if myPlayer.solves < 10:
+        print("")
+    print("Successful test!")
 
 def b2():
     # Prick scenario
@@ -249,14 +258,16 @@ def b2():
 
 def b3():
     # Anti-vaxxer scenario
-    pass
+    print("Successful test!")
 
 def c3():
     # Hottie scenario
-    pass
+    print("Successful test!")
 
 def c4():
     # IT guy scenario.
+    if worldmap["c4"][SOLVED] == True:
+        print("There is nothing more to do here.")
     typewriter("You say hello.")
     typewriter("'...'")
     print(dedent("""Would you like to:
@@ -323,7 +334,8 @@ def kitchen():
     #
     pass
 
-room_dict = {"a1": a1, "b1": b1, "b2": b2}
+room_dict = {"a1": a1, "b1": b1, "b2": b2, "b3": b3,
+             "c3": c3, "c4": c4}
 
 def battle_prompt(location):
     if worldmap[myPlayer.location][SOLVED]:
