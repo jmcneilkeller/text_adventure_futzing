@@ -289,11 +289,29 @@ def c4():
     elif action == 2:
         print("'....'")
         print(dedent("""Would you like to:
-                     1. 
-                     2. 
-                     3. 
+                     1. Introduce yourself again. 
+                     2. Ask him about his scarf. 
+                     3. Stand in silence. 
                      Enter 1, 2 or 3.
                      """))
+        action_2 = input("> ")
+        if action_2 == 1:
+            print("'Yes, I know.', he says dismissively and puts his headphones on.")
+            print("Your will to live decreases by 10 points.")
+            myPlayer.will -= 10
+            world_prompt()
+        elif action_2 == 2:
+            print("")
+        elif action_2 == 3:
+            print("'You're creeping me out, man', he says. He puts his headphones back on.")
+            print("Your will to live decreases by 10 points.")
+            print(dedent("""What would you like to do:
+                                 1. Keep standing there silently. 
+                                 2. Leave. 
+                                 Enter 1, 2.
+                                 """))
+        else:
+            print("Not an option.\nInput 1, 2 or 3.")
     elif action == 3:
         print(dedent("""He sniffs. 'What was the name of the Romulan captain Kirk does battle with
                  in the seminal episode Balance of Terror?'
@@ -302,18 +320,18 @@ def c4():
                  2. Fluttershy.
                  3. Saavak.
                  """))
-        action = input("> ")
-        if action == 1:
+        action_3 = input("> ")
+        if action_3 == 1:
             print("He shakes his head and puts his headphones on.")
             print("Your will to live decreases by 10 points.")
             myPlayer.will -= 10
             world_prompt()
-        elif action == 2:
+        elif action_3 == 2:
             print("He looks at you with disgust, and puts his headphones on.")
             print("\nYour live decreases by 20 points.")
             myPlayer.will -= 20
             world_prompt()
-        elif action == 3:
+        elif action_3 == 3:
             print("'Trick question. He is unnamed.' "
                   "\n He puts his headphones on and ignores you."
                   "\n Your will to live decreases by 10 points.")
