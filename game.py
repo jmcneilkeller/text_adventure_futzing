@@ -225,6 +225,7 @@ def open_it(action):
         pass
 
 def gameover():
+    pass
 
 
     
@@ -254,6 +255,8 @@ def b1():
 
 def b2():
     # Prick scenario
+    if worldmap['b4'][SOLVED] == False:
+        print("")
     print("Successful test!")
 
 def b3():
