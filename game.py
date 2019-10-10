@@ -308,7 +308,7 @@ def c4():
             print(dedent("""What would you like to do:
                                  1. Keep standing there silently. 
                                  2. Leave. 
-                                 Enter 1, 2.
+                                 Enter 1 or 2.
                                  """))
         else:
             print("Not an option.\nInput 1, 2 or 3.")
