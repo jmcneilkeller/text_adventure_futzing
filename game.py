@@ -24,6 +24,14 @@ class Player():
 
         
 myPlayer = Player()
+
+def will_check():
+    print(myPlayer.will)
+    world_prompt()
+
+def quit():
+    print("Goodybye!")
+    sys.exit()
         
 #### Typewriter ####
 
@@ -166,7 +174,7 @@ def world_prompt():
     print("What would you like to do?\n")
     print("move, look, talk, location, open or quit?\n")
     action = input("> ")
-    valid_actions = ["move", "quit", "look", "talk", "open", "location"]
+    valid_actions = ["move", "quit", "look", "talk", "open", "location", "will"]
     while action.lower().strip() not in valid_actions:
         print("Invalid command. Try again friend.")
         action = input("> ")
@@ -182,6 +190,8 @@ def world_prompt():
         open_it(action.lower())
     elif action.lower().strip() == "location":
         print_location()
+    elif action.lower().strip() == "will":
+        will_check()
 
 
 def move(action):
@@ -272,7 +282,7 @@ def c4():
     if worldmap["c4"][SOLVED] == True:
         print("There is nothing more to do here.")
     typewriter("You say hello.")
-    typewriter("'...'")
+    typewriter("\n'...'\n")
     print(dedent("""Would you like to:
                  1. Clap your hands and say: 'Hey! I'm talking here!'
                  2. Introduce yourself.
@@ -280,13 +290,17 @@ def c4():
                  Enter 1, 2 or 3.
                   """))
     action = input("> ")
-    if action == 1:
+    valid_actions = ["1","2","3"]
+    while action not in valid_actions:
+        print("Not an option.\nInput 1, 2 or 3.")
+        action = input("> ")
+    if action == "1":
         print("He sniffs and starts to type on his keyboard."
               "\nYour phone starts to beep loudly, then powers down abruptly. You can't get it back on."
               "\nYour will to live has decreased by 30 points. You are also kind of an asshole.")
         myPlayer.will -= 30
         world_prompt()
-    elif action == 2:
+    elif action == "2":
         print("'....'")
         print(dedent("""Would you like to:
                      1. Introduce yourself again. 
@@ -295,14 +309,17 @@ def c4():
                      Enter 1, 2 or 3.
                      """))
         action_2 = input("> ")
-        if action_2 == 1:
+        while action_2 not in valid_actions:
+            print("Not an option.\nInput 1, 2 or 3.")
+            action_2 = input("> ")
+        if action_2 == "1":
             print("'Yes, I know.', he says dismissively and puts his headphones on.")
             print("Your will to live decreases by 10 points.")
             myPlayer.will -= 10
             world_prompt()
-        elif action_2 == 2:
+        elif action_2 == "2":
             print("")
-        elif action_2 == 3:
+        elif action_2 == "3":
             print("'You're creeping me out, man', he says. He puts his headphones back on.")
             print("Your will to live decreases by 10 points.")
             myPlayer.will -= 10
@@ -312,7 +329,7 @@ def c4():
                                  Enter 1 or 2.
                                  """))
             action_3 = input("> ")
-            while action_3 == 1:
+            while action_3 == "1":
                 print("This is awkward.")
                 print("Your will to live decreases by 10 points.")
                 myPlayer.will -= 10
@@ -322,13 +339,9 @@ def c4():
                                                  Enter 1 or 2.
                                                  """))
                 action_3 = input("> ")
-            if action_3 == 2:
+            if action_3 == "2":
                 world_prompt()
-
-
-        else:
-            print("Not an option.\nInput 1, 2 or 3.")
-    elif action == 3:
+    elif action == "3":
         print(dedent("""He sniffs. 'What was the name of the Romulan captain Kirk does battle with
                  in the seminal episode Balance of Terror?'
                  Enter 1, 2 or 3:
@@ -337,17 +350,20 @@ def c4():
                  3. Saavak.
                  """))
         action_3 = input("> ")
-        if action_3 == 1:
+        while action_3 not in valid_actions:
+            print("Not an option.\nInput 1, 2 or 3.")
+            action_3 = input("> ")
+        if action_3 == "1":
             print("He shakes his head and puts his headphones on.")
             print("Your will to live decreases by 10 points.")
             myPlayer.will -= 10
             world_prompt()
-        elif action_3 == 2:
+        elif action_3 == "2":
             print("He looks at you with disgust, and puts his headphones on.")
             print("\nYour live decreases by 20 points.")
             myPlayer.will -= 20
             world_prompt()
-        elif action_3 == 3:
+        elif action_3 == "3":
             print("'Trick question. He is unnamed.' "
                   "\n He puts his headphones on and ignores you."
                   "\n Your will to live decreases by 10 points.")
@@ -355,9 +371,6 @@ def c4():
             world_prompt()
         else:
             print("Not an option.\nInput 1, 2 or 3.")
-
-    else:
-        print("Not an option.\nInput 1, 2 or 3.")
 
 def printer():
     # Printer scenario
