@@ -305,11 +305,27 @@ def c4():
         elif action_2 == 3:
             print("'You're creeping me out, man', he says. He puts his headphones back on.")
             print("Your will to live decreases by 10 points.")
+            myPlayer.will -= 10
             print(dedent("""What would you like to do:
                                  1. Keep standing there silently. 
                                  2. Leave. 
                                  Enter 1 or 2.
                                  """))
+            action_3 = input("> ")
+            while action_3 == 1:
+                print("This is awkward.")
+                print("Your will to live decreases by 10 points.")
+                myPlayer.will -= 10
+                print(dedent("""What would you like to do:
+                                                 1. Keep standing there silently. 
+                                                 2. Leave. 
+                                                 Enter 1 or 2.
+                                                 """))
+                action_3 = input("> ")
+            if action_3 == 2:
+                world_prompt()
+
+
         else:
             print("Not an option.\nInput 1, 2 or 3.")
     elif action == 3:
