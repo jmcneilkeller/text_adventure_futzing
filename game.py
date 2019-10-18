@@ -282,7 +282,7 @@ def c4():
     if worldmap["c4"][SOLVED] == True:
         print("There is nothing more to do here.")
     typewriter("You say hello.")
-    typewriter("\n'...'\n")
+    typewriter("\n...no response\n")
     print(dedent("""Would you like to:
                  1. Clap your hands and say: 'Hey! I'm talking here!'
                  2. Introduce yourself.
@@ -318,7 +318,13 @@ def c4():
             myPlayer.will -= 10
             world_prompt()
         elif action_2 == "2":
-            print("")
+            print("'Yeah, it's a Tottenham scarf. Do you support a club?'\n")
+            print(dedent("""Which Premier League team :
+                                 1. Arsenal 
+                                 2. Chelsea 
+                                 3.  
+                                 Enter 1, 2 or 3.
+                                 """))
         elif action_2 == "3":
             print("'You're creeping me out, man', he says. He puts his headphones back on.")
             print("Your will to live decreases by 10 points.")
@@ -369,8 +375,6 @@ def c4():
                   "\n Your will to live decreases by 10 points.")
             myPlayer.will -= 10
             world_prompt()
-        else:
-            print("Not an option.\nInput 1, 2 or 3.")
 
 def printer():
     # Printer scenario
