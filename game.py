@@ -322,7 +322,7 @@ def c4():
             print(dedent("""Which Premier League team :
                                  1. Arsenal 
                                  2. Chelsea 
-                                 3.  
+                                 3. Everton 
                                  Enter 1, 2 or 3.
                                  """))
         elif action_2 == "3":
