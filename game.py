@@ -8,7 +8,7 @@ import os
 import time
 from random import uniform
 
-screen_width = 100
+screen_width = 150
 
 #### Player Setup ####
 
@@ -26,11 +26,11 @@ class Player():
 myPlayer = Player()
 
 def will_check():
-    print(myPlayer.will)
+    print("You have " + str(myPlayer.will) + " will left.")
     world_prompt()
 
 def quit():
-    print("Goodybye!")
+    print("Goodbye!\n")
     sys.exit()
         
 #### Typewriter ####
@@ -68,7 +68,7 @@ def title_screen_selection():
     elif option.lower() == ('help'):
         help_menu()
     elif option.lower() == ('quit'):
-        sys.exit()
+        quit()
     while option.lower() not in ['play','help','quit']:
         print('Please choose an option.')
         option = input('> ')
@@ -77,7 +77,7 @@ def title_screen_selection():
         elif option.lower() == ('help'):
             help_menu()
         elif option.lower() == ('quit'):
-            sys.exit()
+            quit()
     
 def help_menu():
     print(dedent("""
@@ -176,10 +176,10 @@ def world_prompt():
     action = input("> ")
     valid_actions = ["move", "quit", "look", "talk", "open", "location", "will"]
     while action.lower().strip() not in valid_actions:
-        print("Invalid command. Try again friend.")
+        print("Invalid command. Try again, friend.")
         action = input("> ")
     if action.lower().strip() == "quit":
-        sys.exit()
+        quit()
     elif action.lower().strip() == "move":
         move(action.lower())
     elif action.lower().strip() == "look":
@@ -204,16 +204,16 @@ def move(action):
         print("Nope, you can't move that way.")
         print("\nWhich way would you like to " + action + "?\n")
         dest = input("> ")
-    if dest.lower().strip() == 'up':
+    if dest.lower().strip() == "up":
         destination = worldmap[myPlayer.location][UP]
         movement(destination)
-    elif dest.lower().strip() == 'down':
+    elif dest.lower().strip() == "down":
         destination = worldmap[myPlayer.location][DOWN]
         movement(destination)
-    elif dest.lower().strip() == 'left':
+    elif dest.lower().strip() == "left":
         destination = worldmap[myPlayer.location][LEFT]
         movement(destination)
-    elif dest.lower().strip() == 'right':
+    elif dest.lower().strip() == "right":
         destination = worldmap[myPlayer.location][RIGHT]
         movement(destination)
 
@@ -231,11 +231,15 @@ def look(action):
 def open_it(action):
     if worldmap[myPlayer.location][SOLVED]:
         print("You've already ransacked the place.")
+    elif worldmap[myPlayer.location] is "a3":
+        a3()
     else:
-        pass
+        print(worldmap[myPlayer.location][OPEN])
+
 
 def gameover():
-    pass
+    myPlayer.gameover = True
+    quit()
 
 
     
@@ -252,8 +256,8 @@ def main_game():
 def a1():
     # Boss scenario
     while worldmap["b1"][SOLVED] == False:
-        print("Your boss looks up. 'Who're you?'")
-        print("Your boss doesn't know your name. Your will to live reduces to zero")
+        print("Your boss looks up. 'Who're you?'\n")
+        print("Your boss doesn't know your name. Your will to live reduces to zero!\n")
         gameover()
     print("Successful test!")
 
@@ -272,6 +276,16 @@ def b2():
 def b3():
     # Anti-vaxxer scenario
     print("Successful test!")
+
+def b4():
+    # Printer scenario
+    pass
+
+def c2():
+    # Your "office"
+    while worldmap["c4"][SOLVED] == False:
+        # MORE CODE HERE!!!
+        world_prompt()
 
 def c3():
     # Hottie scenario
@@ -304,7 +318,7 @@ def c4():
         print("'....'")
         print(dedent("""Would you like to:
                      1. Introduce yourself again. 
-                     2. Ask him about his scarf. 
+                     2. Ask about your monitor. 
                      3. Stand in silence. 
                      Enter 1, 2 or 3.
                      """))
@@ -318,13 +332,14 @@ def c4():
             myPlayer.will -= 10
             world_prompt()
         elif action_2 == "2":
-            print("'Yeah, it's a Tottenham scarf. Do you support a club?'\n")
-            print(dedent("""Which Premier League team :
-                                 1. Arsenal 
-                                 2. Chelsea 
-                                 3. Everton 
-                                 Enter 1, 2 or 3.
-                                 """))
+            print("'Finally! Someone who gets to the point.'\n")
+            print("'Every time someone comes to ask me for stuff, they just want to make small talk.'\n")
+            print("'I'll have your monitor hooked up. It'll be ready by the time you get back to your room.'\n")
+            myPlayer.will += 5
+            print("\nYour live to live increases by 5 points.")
+            worldmap["c4"][SOLVED] = True
+            myPlayer.solves += 1
+            world_prompt()
         elif action_2 == "3":
             print("'You're creeping me out, man', he says. He puts his headphones back on.")
             print("Your will to live decreases by 10 points.")
@@ -376,17 +391,13 @@ def c4():
             myPlayer.will -= 10
             world_prompt()
 
-def printer():
-    # Printer scenario
-    pass
-
 def conference_room():
     # Conference room scenario
     pass
 
-def kitchen():
-    #
-    pass
+def a3():
+    # Kitchen scenario
+    print("Successful test")
 
 room_dict = {"a1": a1, "b1": b1, "b2": b2, "b3": b3,
              "c3": c3, "c4": c4}
@@ -456,8 +467,8 @@ worldmap = {"a1": {
                   },
             "a3": {
                     ZONENAME: "Kitchen",
-                    DESCRIPTION: 'description',
-                    OPEN: "opened",
+                    DESCRIPTION: "",
+                    OPEN: a3(),
                     SOLVED: False,
                     UP: "a2",
                     DOWN: "a4",
@@ -475,7 +486,7 @@ worldmap = {"a1": {
                     RIGHT: "b4",
                    },
             "b1": {
-                   ZONENAME: "",
+                   ZONENAME: "Receptionist's office",
                    DESCRIPTION: 'description',
                    OPEN: "opened",
                    SOLVED: False,
@@ -525,10 +536,10 @@ worldmap = {"a1": {
                    RIGHT: "",
                   },
             "c2": {
-                   ZONENAME: "startzone",
+                   ZONENAME: "Your 'office'",
                    DESCRIPTION: "Your 'office' is in a converted storage closet.\n"
                                   "Your mouse and keyboard are there, but they've neglected to give you a monitor.",
-                   OPEN: "opened",
+                   OPEN: "You have no monitor, so there's nothing for you to do.",
                    SOLVED: False,
                    UP: "c1",
                    DOWN: "c3",
@@ -536,7 +547,7 @@ worldmap = {"a1": {
                    RIGHT: "",
                   },
             "c3": {
-                    ZONENAME: "",
+                    ZONENAME: "Data Analyst's office.",
                     DESCRIPTION: 'description',
                     OPEN: "opened",
                     SOLVED: False,
@@ -549,7 +560,7 @@ worldmap = {"a1": {
                     ZONENAME: "IT Room",
                     DESCRIPTION: "The room is crowded with boxes of cables, broken servers and "
                                    "\na sullen looking man staring at his computer screen.",
-                    OPEN: "opened",
+                    OPEN: "You open one of the drawers and peek inside. More cables.",
                     SOLVED: False,
                     UP: "c3",
                     DOWN: "",
