@@ -47,6 +47,18 @@ def typewriter(text, start=None, stop=None):
         sys.stdout.flush()
         time.sleep(uniform(start, stop))
 
+
+
+
+
+
+
+
+
+
+
+
+
 #### Title Screen ####
 
 def title_screen():
@@ -187,7 +199,7 @@ def world_prompt():
     elif action.lower().strip() == "talk":
         battle_prompt(myPlayer.location)
     elif action.lower().strip() == "open":
-        open_it(action.lower())
+        open_it(myPlayer.location)
     elif action.lower().strip() == "location":
         print_location()
     elif action.lower().strip() == "will":
@@ -227,15 +239,6 @@ def look(action):
         print("You've already seen whatever can be seen.")
     else:
         print(worldmap[myPlayer.location][DESCRIPTION])
-
-def open_it(action):
-    if worldmap[myPlayer.location][SOLVED]:
-        print("You've already ransacked the place.")
-    elif worldmap[myPlayer.location] == "a3":
-        a3()
-    else:
-        print(worldmap[myPlayer.location][OPEN])
-
 
 def gameover():
     myPlayer.gameover = True
@@ -279,6 +282,9 @@ def b3():
 
 def b4():
     # Printer scenario
+    pass
+
+def c1():
     pass
 
 def c2():
@@ -399,21 +405,31 @@ def a3():
     # Kitchen scenario
     print("Successful test")
 
-room_dict = {"a1": a1, "b1": b1, "b2": b2, "b3": b3,
+battle_dict = {"a1": a1, "b1": b1, "b2": b2, "b3": b3,
              "c3": c3, "c4": c4}
 
 def battle_prompt(location):
-    if worldmap[myPlayer.location][SOLVED]:
+    if worldmap[location][SOLVED]:
         print("Do you really want to have this conversation again?")
         world_prompt()
-    elif myPlayer.location in ["c1","a3","b4"]:
+    elif location in ["c1","a3","b4"]:
         print("Ummm...there is no one in the room. Who are you talking to?")
         myPlayer.will -= 5
         print("Your will to live has decreased by five points.")
         world_prompt()
     else:
-        room_dict[location]()
+        battle_dict[location]()
 
+open_dict = {"a3": a3, "b4": b4, "c1": c1}
+
+def open_it(location):
+    while worldmap[location][SOLVED]:
+        print("You've already ransacked the place.")
+        world_prompt()
+    if location in ["a3","b4","c1"]:
+        open_dict[location]()
+    else:
+        print(worldmap[location][OPEN])
 
 ### MAP ###
 ### Start in C2.###
