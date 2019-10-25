@@ -231,7 +231,7 @@ def look(action):
 def open_it(action):
     if worldmap[myPlayer.location][SOLVED]:
         print("You've already ransacked the place.")
-    elif worldmap[myPlayer.location] is "a3":
+    elif worldmap[myPlayer.location] == "a3":
         a3()
     else:
         print(worldmap[myPlayer.location][OPEN])
@@ -468,7 +468,7 @@ worldmap = {"a1": {
             "a3": {
                     ZONENAME: "Kitchen",
                     DESCRIPTION: "",
-                    OPEN: a3(),
+                    OPEN: "Nothing here.",
                     SOLVED: False,
                     UP: "a2",
                     DOWN: "a4",
