@@ -47,18 +47,6 @@ def typewriter(text, start=None, stop=None):
         sys.stdout.flush()
         time.sleep(uniform(start, stop))
 
-
-
-
-
-
-
-
-
-
-
-
-
 #### Title Screen ####
 
 def title_screen():
@@ -210,6 +198,7 @@ def move(action):
     print("\n" + "====================")
     print("\nOk, let's meander around the office!\n"
           "Which way would you like to " + action + "?\n")
+    print("Up, down, left or right?")
     dest = input("> ")
     directions = ["up", "down", "left", "right"]
     while dest.lower().strip() not in directions:
@@ -258,9 +247,9 @@ def main_game():
 
 def a1():
     # Boss scenario
-    while worldmap["b1"][SOLVED] == False:
+    while not worldmap["b1"][SOLVED]:
         print("Your boss looks up. 'Who're you?'\n")
-        print("Your boss doesn't know your name. Your will to live reduces to zero!\n")
+        print("Your boss doesn't know your name! Your will to live reduces to zero!\n")
         gameover()
     print("Successful test!")
 
@@ -272,7 +261,7 @@ def b1():
 
 def b2():
     # Prick scenario
-    if worldmap['b4'][SOLVED] == False:
+    if not worldmap['b4'][SOLVED]:
         print("")
     print("Successful test!")
 
@@ -285,21 +274,27 @@ def b4():
     pass
 
 def c1():
+    if worldmap["c1"][SOLVED]:
+        print("There is nothing more to do here.")
     pass
 
 def c2():
     # Your "office"
-    while worldmap["c4"][SOLVED] == False:
+    while not worldmap["c4"][SOLVED]:
         # MORE CODE HERE!!!
         world_prompt()
+    if worldmap["c2"][SOLVED]:
+        print("There is nothing more to do here.")
 
 def c3():
     # Hottie scenario
+    if worldmap["c3"][SOLVED]:
+        print("There is nothing more to do here.")
     print("Successful test!")
 
 def c4():
     # IT guy scenario.
-    if worldmap["c4"][SOLVED] == True:
+    if worldmap["c4"][SOLVED]:
         print("There is nothing more to do here.")
     typewriter("You say hello.")
     typewriter("\n...no response\n")
@@ -430,6 +425,7 @@ def open_it(location):
         open_dict[location]()
     else:
         print(worldmap[location][OPEN])
+        world_prompt()
 
 ### MAP ###
 ### Start in C2.###
