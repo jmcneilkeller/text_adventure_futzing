@@ -398,6 +398,8 @@ def conference_room():
 
 def a3():
     # Kitchen scenario
+    if worldmap[location][SOLVED]:
+        print("The cabinet fixed itself. Spooky.")
     print("Successful test")
 
 battle_dict = {"a1": a1, "b1": b1, "b2": b2, "b3": b3,
