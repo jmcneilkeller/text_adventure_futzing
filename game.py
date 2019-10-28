@@ -401,12 +401,22 @@ def a3():
     if worldmap[location][SOLVED]:
         print("The cabinet fixed itself. Spooky.")
     typewriter("It's the kitchen. It has the usual assortment of cheap tea.\n You notice one of the cabinet doors is swinging open.\n")
-    print(dedent("What would you like to do?:"
-                 "1. Try to close the door."
-                 "2. Just leave it."))
+    print(dedent("""What would you like to do?:"
+                 "1. Try to close it."
+                 "2. Just leave it.
+                 Enter 1 or 2."""))
     action = input("> ")
     if action == "1":
-        print("")
+        print("You push it closed. It clicks open again.\n")
+        print(dedent("""What do you want to do?:"
+                     "1. Try to close it again."
+                     "2. Just leave it.
+                     Enter 1 or 2."""))
+        action_2 = input("> ")
+        if action_2 == 1:
+            print("")
+        elif action_2 == 2:
+            world_prompt()
     elif action == "2":
         world_prompt()
 
