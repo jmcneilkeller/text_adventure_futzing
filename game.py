@@ -400,7 +400,15 @@ def a3():
     # Kitchen scenario
     if worldmap[location][SOLVED]:
         print("The cabinet fixed itself. Spooky.")
-    print("Successful test")
+    typewriter("It's the kitchen. It has the usual assortment of cheap tea.\n You notice one of the cabinet doors is swinging open.\n")
+    print(dedent("What would you like to do?:"
+                 "1. Try to close the door."
+                 "2. Just leave it."))
+    action = input("> ")
+    if action == "1":
+        print("")
+    elif action == "2":
+        world_prompt()
 
 battle_dict = {"a1": a1, "b1": b1, "b2": b2, "b3": b3,
              "c3": c3, "c4": c4}
