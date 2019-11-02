@@ -414,7 +414,7 @@ def a3():
                      Enter 1 or 2."""))
         action_2 = input("> ")
         if action_2 == 1:
-            print("")
+            print(dedent("""You shut it closed with a bit more force.\n"""))
         elif action_2 == 2:
             world_prompt()
     elif action == "2":
