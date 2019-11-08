@@ -414,8 +414,15 @@ def a3():
                      Enter 1 or 2."""))
         action_2 = input("> ")
         if action_2 == 1:
-            print(dedent("""You shut it closed with a bit more force and start to walk away.
-                         You hear a click as it springs back open."""))
+            print("""You shut it closed with a bit more force and start to walk away.\n
+                         The instant you turn away you hear a click as it opens back up.\n""")
+            myPlayer.will -= 5
+            print("Your will to live decreases by five points.")
+            print(dedent("""What do you want to do?:"
+                          "1. Walk away."
+                          "2. Really slam it. I mean, really, really slam it. .
+                          Enter 1 or 2."""))
+
         elif action_2 == 2:
             world_prompt()
     elif action == "2":
