@@ -420,8 +420,10 @@ def a3():
             print("Your will to live decreases by five points.")
             print(dedent("""What do you want to do?:"
                           "1. Walk away."
-                          "2. Really slam it. I mean, really, really slam it. .
+                          "2. Really slam it. I mean really, really slam it. .
                           Enter 1 or 2."""))
+            action_3 = input("> ")
+            if action_3
 
         elif action_2 == 2:
             world_prompt()
