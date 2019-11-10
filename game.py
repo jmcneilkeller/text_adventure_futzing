@@ -423,7 +423,9 @@ def a3():
                           "2. Really slam it. I mean really, really slam it. .
                           Enter 1 or 2."""))
             action_3 = input("> ")
-            if action_3
+            if action_3 == 1:
+                print("You hear a click and turn around. The door has shut by itself.")
+                print("Spooky.")
 
         elif action_2 == 2:
             world_prompt()
