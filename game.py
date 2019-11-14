@@ -420,13 +420,23 @@ def a3():
             print("Your will to live decreases by five points.")
             print(dedent("""What do you want to do?:"
                           "1. Walk away."
-                          "2. Really slam it. I mean really, really slam it. .
+                          "2. Really slam it...I mean really, really slam it.
                           Enter 1 or 2."""))
             action_3 = input("> ")
             if action_3 == 1:
-                print("You hear a click and turn around. The door has shut by itself.")
-                print("Spooky.")
-
+                print("Frustrated, you start to leave in disgust.\n")
+                print("You've only taken a few steps when you hear a click behind you.\n")
+                print("You turn to see the cabinet door has shut. There is a faint laughter in the air.\n")
+                print("Spooky. You get the feeling you should leave and never come back.\n")
+                worldmap["a3"][SOLVED] = True
+                myPlayer.solves += 1
+                world_prompt()
+            elif action_3 == 2:
+                print("You hurl it closed with all of your might...and it swings back into your face.\n")
+                myPlayer.will -= 30
+                print("You wake up with a black eye. No one has bothered to search for you.\n")
+                print("Your will to live has decreased by 30 points.\n")
+                world_prompt()
         elif action_2 == 2:
             world_prompt()
     elif action == "2":
