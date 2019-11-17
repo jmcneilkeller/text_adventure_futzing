@@ -271,6 +271,8 @@ def b3():
 
 def b4():
     # Printer scenario
+    if worldmap["b4"][SOLVED]:
+        print("")
     pass
 
 def c1():
