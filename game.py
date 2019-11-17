@@ -272,7 +272,7 @@ def b3():
 def b4():
     # Printer scenario
     if worldmap["b4"][SOLVED]:
-        print("")
+        print("The printer shoots some shredded paper at you in disgust. Best to leave.")
     pass
 
 def c1():
