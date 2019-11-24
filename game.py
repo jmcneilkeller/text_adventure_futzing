@@ -278,7 +278,15 @@ def b4():
 def c1():
     if worldmap["c1"][SOLVED]:
         print("There is nothing more to do here.")
-    pass
+    typewriter("The conference room has floor to ceiling windows, but is surprisingly dark.\n"
+               "There is no view of the sky, but you can see clearly into the \n"
+               "windows of the building across the street.")
+    print(dedent("""What would you like to do?
+    
+                    1. Look.
+                    2. Don't look."""))
+    
+
 
 def c2():
     # Your "office"
@@ -312,7 +320,7 @@ def c4():
         print("Not an option.\nInput 1, 2 or 3.")
         action = input("> ")
     if action == "1":
-        print("He sniffs and starts to type on his keyboard."
+        typewriter("He sniffs and starts to type on his keyboard."
               "\nYour phone starts to beep loudly, then powers down abruptly. You can't get it back on."
               "\nYour will to live has decreased by 30 points. You are also kind of an asshole.")
         myPlayer.will -= 30
@@ -393,10 +401,6 @@ def c4():
                   "\n Your will to live decreases by 10 points.")
             myPlayer.will -= 10
             world_prompt()
-
-def conference_room():
-    # Conference room scenario
-    pass
 
 def a3():
     # Kitchen scenario
