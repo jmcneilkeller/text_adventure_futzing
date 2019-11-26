@@ -285,8 +285,15 @@ def c1():
     
                     1. Look.
                     2. Don't look."""))
-    
-
+    action = input("> ")
+    valid_actions = ["1", "2"]
+    while action not in valid_actions:
+        print("Not an option, try again.")
+        action = input("> ")
+    if action == "1":
+        pass
+    elif action == "2":
+        world_prompt()
 
 def c2():
     # Your "office"
@@ -463,7 +470,7 @@ def battle_prompt(location):
     else:
         battle_dict[location]()
 
-open_dict = {"a3": a3, "b4": b4, "c1": c1}
+open_dict = {"a3": a3, "b4": b4, "c1": c1, "c2":c2}
 
 def open_it(location):
     while worldmap[location][SOLVED]:
