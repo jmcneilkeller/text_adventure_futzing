@@ -267,6 +267,8 @@ def b2():
 
 def b3():
     # Anti-vaxxer scenario
+    if worldmap["b3"][SOLVED]:
+        print("There is nothing more to do here.")
     print("Successful test!")
 
 def b4():
@@ -309,7 +311,8 @@ def c3():
         print("There is nothing more to do here.")
     print(dedent("""What would you like to do?:
                     1. Compliment their sexiness.
-                    2. Look for a ring."""))
+                    2. Look for a ring.
+                    3. Try to subtly unbutton your shirt a little."""))
 
 def c4():
     # IT guy scenario.
