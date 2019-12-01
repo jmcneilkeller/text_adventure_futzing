@@ -307,7 +307,9 @@ def c3():
     # Hottie scenario
     if worldmap["c3"][SOLVED]:
         print("There is nothing more to do here.")
-    print("Successful test!")
+    print(dedent("""What would you like to do?:
+                    1. Compliment their sexiness.
+                    2. Look for a ring."""))
 
 def c4():
     # IT guy scenario.
