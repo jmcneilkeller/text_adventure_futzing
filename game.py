@@ -35,13 +35,9 @@ def quit():
         
 #### Typewriter ####
 
-def typewriter(text, start=None, stop=None):
+def typewriter(text, start=0.025, stop=0.1):
     # Prints out in a typewriter effect.
     # Expects a string
-    if start is None:
-        start = 0.025
-    if stop is None:
-        stop = 0.1
     for i in range(len(text)):
         sys.stdout.write(text[i])
         sys.stdout.flush()
