@@ -157,8 +157,6 @@ def setup_game():
 
 ### GAME INTERACTIVITY ###
 
-# Add specific "battle" prompt functionality.
-
 def print_location():
     print('\n' + ('#' * (4 + len(myPlayer.location))))
     print('# ' + myPlayer.location + ' #')
@@ -215,7 +213,7 @@ def move(action):
         movement(destination)
 
 def movement(destination):
-    print("\nYou have moved to " + worldmap[destination][ZONENAME] + ".")
+    print("\nYou have moved to the " + worldmap[destination][ZONENAME] + ".")
     myPlayer.location = destination
     print_location()
 
@@ -224,6 +222,7 @@ def look(action):
         print("You've already seen whatever can be seen.")
     else:
         print(worldmap[myPlayer.location][DESCRIPTION])
+        worldmap[myPlayer.location][EXAMINED] = True
 
 def gameover():
     myPlayer.gameover = True
@@ -462,7 +461,8 @@ battle_dict = {"a1": a1, "b1": b1, "b2": b2, "b3": b3,
 def battle_prompt(location):
     if worldmap[location][SOLVED]:
         print("Do you really want to have this conversation again?")
-        world_prompt()
+    elif worldmap[location][EXAMINED] == False:
+        print("Shouldn't you have a look around first?")
     elif location in ["c1","a3","b4"]:
         print("Ummm...there is no one in the room. Who are you talking to?")
         myPlayer.will -= 5
@@ -501,6 +501,7 @@ def open_it(location):
 
 ZONENAME = ""
 DESCRIPTION = "description"
+EXAMINED = False
 OPEN = "opened"
 SOLVED = False
 UP = "up", "north"
@@ -516,6 +517,7 @@ solved_places = {"a1": False, "a2": False, "a3": False, "a4": False,
 worldmap = {"a1": {
                    ZONENAME: "Boss's office",
                    DESCRIPTION: 'description',
+                   EXAMINED: False,
                    OPEN: "opened",
                    SOLVED: False,
                    UP: "",
@@ -526,6 +528,7 @@ worldmap = {"a1": {
             "a2": {
                    ZONENAME: "",
                    DESCRIPTION: "description",
+                   EXAMINED: False,
                    OPEN: "opened",
                    SOLVED: False,
                    UP: "a1",
@@ -536,6 +539,7 @@ worldmap = {"a1": {
             "a3": {
                     ZONENAME: "Kitchen",
                     DESCRIPTION: "",
+                    EXAMINED: False,
                     OPEN: "Nothing here.",
                     SOLVED: False,
                     UP: "a2",
@@ -546,6 +550,7 @@ worldmap = {"a1": {
             "a4": {
                     ZONENAME: "",
                     DESCRIPTION: 'description',
+                    EXAMINED: False,
                     OPEN: "opened",
                     SOLVED: False,
                     UP: "a3",
@@ -556,6 +561,7 @@ worldmap = {"a1": {
             "b1": {
                    ZONENAME: "Receptionist's office",
                    DESCRIPTION: 'description',
+                   EXAMINED: False,
                    OPEN: "opened",
                    SOLVED: False,
                    UP: "",
@@ -566,6 +572,7 @@ worldmap = {"a1": {
             "b2": {
                    ZONENAME: "Sales lead's office",
                    DESCRIPTION: "It's an office, baby.",
+                   EXAMINED: False,
                    OPEN: "opened",
                    SOLVED: False,
                    UP: "b1",
@@ -576,6 +583,7 @@ worldmap = {"a1": {
             "b3": {
                     ZONENAME: "Financial Analyst's office",
                     DESCRIPTION: 'description',
+                    EXAMINED: False,
                     OPEN: "opened",
                     SOLVED: False,
                     UP: "b2",
@@ -586,6 +594,7 @@ worldmap = {"a1": {
             "b4": {
                     ZONENAME: "Printer room",
                     DESCRIPTION: 'description',
+                    EXAMINED: False,
                     OPEN: "opened",
                     SOLVED: False,
                     UP: "b3",
@@ -596,6 +605,7 @@ worldmap = {"a1": {
             "c1": {
                    ZONENAME: "Conference Room",
                    DESCRIPTION: 'description',
+                   EXAMINED: False,
                    OPEN: "opened",
                    SOLVED: False,
                    UP: "",
@@ -605,8 +615,9 @@ worldmap = {"a1": {
                   },
             "c2": {
                    ZONENAME: "Your 'office'",
-                   DESCRIPTION: "Your 'office' is in a converted storage closet.\n"
+                   DESCRIPTION: "This is your office. By 'office' read converted storage closet.\n"
                                   "Your mouse and keyboard are there, but they've neglected to give you a monitor.",
+                   EXAMINED: False,
                    OPEN: "You have no monitor, so there's nothing for you to do.",
                    SOLVED: False,
                    UP: "c1",
@@ -616,7 +627,9 @@ worldmap = {"a1": {
                   },
             "c3": {
                     ZONENAME: "Data Analyst's office.",
-                    DESCRIPTION: 'description',
+                    DESCRIPTION: "The room is filled with O'Reilly guides and has xkcd comics pinned to the corkboard.\n"
+                                 "At the desk, you see the most beautiful human you've ever seen.",
+                    EXAMINED: False,
                     OPEN: "opened",
                     SOLVED: False,
                     UP: "c2",
@@ -628,6 +641,7 @@ worldmap = {"a1": {
                     ZONENAME: "IT Room",
                     DESCRIPTION: "The room is crowded with boxes of cables, broken servers and "
                                    "\na sullen looking man staring at his computer screen.",
+                    EXAMINED: False,
                     OPEN: "You open one of the drawers and peek inside. More cables.",
                     SOLVED: False,
                     UP: "c3",
